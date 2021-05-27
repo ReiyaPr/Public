@@ -1,0 +1,10 @@
+<main>
+<a href="/new" id='new-memo'>新規メモ作成</a>
+  <ul class="memos">
+    <% @memos.each do |memo| %>
+    <li ><a  href="/memos/<%= memo['id'] %>"><%= memo['title']%></a></li>
+    <% end %>
+  </ul>
+</main>
+
+
