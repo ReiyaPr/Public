@@ -31,7 +31,7 @@ post '/' do
   File.open("memos/#{memo['title']}.json", 'w') do |file|
     JSON.dump(memo, file)
   end
-  redirect to('')
+  redirect to('/')
 end
 
 get '/new' do
@@ -50,7 +50,7 @@ get '/memos/:id' do
   erb :detail
 end
 
-delete '/memos/:id/edit' do
+delete '/memos/:id' do
   memos = read_json_file
   memos.each do |memo|
     next unless memo['id'] == params[:id]
@@ -59,7 +59,7 @@ delete '/memos/:id/edit' do
     @title = memo['title']
     File.delete("memos/#{@title}.json")
   end
-  redirect to('')
+  redirect to('/')
 end
 
 get '/memos/:id/edit' do
@@ -74,7 +74,7 @@ get '/memos/:id/edit' do
   erb :edit
 end
 
-patch '/memos/:id/edit' do
+patch '/memos/:id' do
   memos = read_json_file
   memos.each do |memo|
     next unless memo['id'] == params[:id]
@@ -86,7 +86,7 @@ patch '/memos/:id/edit' do
       JSON.dump(updated_memo, file)
     end
   end
-  redirect to('')
+  redirect to('/')
 end
 
 not_found do

@@ -5,10 +5,8 @@
 <div class="article_title">内容</div>
 <div class="article"><%= @article%></div>
    <button><a href = "/memos/<%= @id%>/edit" type="submit">編集</a></button>
-   <form action= '/memos/<%= @id%>/edit' method="post" >
+   <form action= '/memos/<%= @id%>' method="post" >
     <input type="hidden" name="_method" value="DELETE"> 
    <button type="submit" value="削除">削除</button>
    </form>
 </main>
-
- 
