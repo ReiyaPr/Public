@@ -1,12 +1,9 @@
-
-<main>
 <div class="memo_title">タイトル</div>
 <div class="title"> <%= @title %></div>
 <div class="article_title">内容</div>
 <div class="article"><%= @article%></div>
-   <button><a href = "/memos/<%= @id%>/edit" type="submit">編集</a></button>
-   <form action= '/memos/<%= @id%>' method="post" >
-    <input type="hidden" name="_method" value="DELETE"> 
+<button><a href="/memos/<%= @id%>/edit" type="submit">編集</a></button>
+<form action='/memos/<%= @id%>' method="post">
+   <input type="hidden" name="_method" value="DELETE">
    <button type="submit" value="削除">削除</button>
-   </form>
-</main>
+</form>
