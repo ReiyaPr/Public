@@ -1,0 +1,8 @@
+<form action="/memos/<%= @id%>" method="post">
+  <label class="memo_title" for="title">タイトル</label>
+  <input class="title" type="text" name="title" value=<%= @title %>>
+  <label class="memo_title" for="article">内容</label>
+  <input class="article" type="text" name="article" value=<%= @article%>>
+  <input type="hidden" name="_method" value="PATCH">
+  <button type="submit">保存</button>
+</form>

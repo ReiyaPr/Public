@@ -1,0 +1,133 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #040831;
+}
+
+.header {
+    font-size: 60px;
+    color: #f8f4d0;
+    text-align: center;
+}
+
+.memo_title {
+    display: block;
+    text-align: center;
+    font-size: 24px;
+    margin: 20 auto;
+    padding: 15px 0px;
+    font-weight: bold;
+    border-radius: 3%;
+    color: #f8f4d0
+}
+
+.article_title {
+    display: block;
+    text-align: center;
+    font-size: 24px;
+    margin: 20 auto;
+    padding: 15px auto;
+    font-weight: bold;
+    border-radius: 3%;
+    color: #f8f4d0
+}
+
+.title {
+    display: block;
+    text-align: center;
+    width: 30%;
+    margin: 10px auto;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
+    background-color: #f8f4d0;
+}
+
+.article {
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+    width: 58%;
+    height: 300px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
+    background-color: #f8f4d0;
+}
+
+button {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    width: 10%;
+    margin: 15px auto;
+    background-color: #f8f4d0;
+    color: #040831;
+    border-radius: 10%;
+    cursor: pointer;
+}
+
+#new-memo {
+    display: block;
+    font-size: 24px;
+    color: #040831;
+    width: 15%;
+    margin: 30px auto;
+    padding: 10px;
+    text-align: center;
+    background-color: #f8f4d0;
+    border-radius: 10%;
+    cursor: pointer;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    color: #040831;
+}
+
+footer {
+    color: floralwhite;
+    background-color: #040831;
+    text-align: center;
+    margin: 10px 0;
+}
+
+main {
+    flex: 1;
+}
+
+.memos {
+    color: #2d8fdd;
+    border-left: solid 6px #2d8fdd;
+    background-color: #f8f4d0;
+    margin-bottom: 3px;
+    line-height: 1.5;
+    padding: 0.5em;
+    list-style-type: none !important;
+}
+
+li {
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+    color: #2d8fdd;
+    border-top: solid 2px #040831;
+    border-bottom: solid 2px #040831;
+    border-left: solid 10px#040831;
+    border-right: solid 2px #040831;
+    background: #f8f4d0;
+    margin-bottom: 3px;
+    line-height: 1.5;
+    padding: 10px;
+    list-style-type: none !important;
+}
