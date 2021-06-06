@@ -3,34 +3,56 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
+require 'pg'
 
-def read_json_file
-  files = Dir.glob('memos/*').sort_by { |file| File.mtime(file) }
-  files.map { |memo| JSON.parse(File.read(memo)) }
-end
+class Memo
+  class << self
+    def create_db
+      db = PG.connect(dbname: 'postgres')
+      db.exec 'CREATE TABLE IF NOT EXISTS Memos(Id serial PRIMARY KEY, Title text NOT NULL, Article text NOT NULL, Edit_Id VARCHAR(36))'
+    end
 
-helpers do
-  def escape(text)
-    Rack::Utils.escape_html(text)
+    def load_memo(edit_id = nil)
+      db = PG.connect(dbname: 'postgres')
+      if edit_id
+        db.prepare('load', 'SELECT * FROM Memos WHERE edit_id = $1')
+        db.exec_prepared('load', [edit_id])
+      else
+        db.exec('SELECT * FROM Memos')
+      end
+    end
+
+    def add_memo(title, article, edit_id)
+      db = PG.connect(dbname: 'postgres')
+      db.prepare('add', 'INSERT INTO Memos (title, article, edit_id) VALUES ($1, $2, $3)')
+      db.exec_prepared('add', [title, article, edit_id])
+    end
+
+    def delete_memo(edit_id)
+      db = PG.connect(dbname: 'postgres')
+      db.prepare('delete', 'DELETE FROM Memos WHERE edit_id = $1')
+      db.exec_prepared('delete', [edit_id])
+    end
+
+    def updated_memo(title, article, edit_id)
+      db = PG.connect(dbname: 'postgres')
+      db.prepare('update', 'UPDATE Memos SET title = $1, article = $2 WHERE edit_id = $3')
+      db.exec_prepared('update', [title, article, edit_id])
+    end
   end
 end
 
-before '/' do
-  @title = params[:title]
-  @article = params[:article]
-  @id = params[:id]
-end
+Memo.create_db
 
 get '/' do
-  @memos = read_json_file
+  Memo.create_db
+  @memos = Memo.load_memo.sort_by { |memo| memo['id'] }
   erb :home
 end
 
 post '/' do
-  memo = { 'title' => escape(params[:title]).to_s, 'article' => escape(params[:article]).to_s, 'id' => SecureRandom.uuid }
-  File.open("memos/#{memo['title']}.json", 'w') do |file|
-    JSON.dump(memo, file)
-  end
+  edit_id = SecureRandom.uuid
+  Memo.add_memo(params[:title], params[:article], edit_id)
   redirect to('/')
 end
 
@@ -39,53 +61,28 @@ get '/new' do
 end
 
 get '/memos/:id' do
-  memos = read_json_file
-  memos.each do |memo|
-    next unless memo['id'] == params[:id]
-
-    @id = memo['id']
-    @article = memo['article']
-    @title = memo['title']
-  end
+  memo = Memo.load_memo(params[:id])
+  @edit_id = params[:id]
+  @title = memo[0]['title']
+  @article = memo[0]['article']
   erb :detail
 end
 
 delete '/memos/:id' do
-  memos = read_json_file
-  memos.each do |memo|
-    next unless memo['id'] == params[:id]
-
-    @id = memo['id']
-    @title = memo['title']
-    File.delete("memos/#{@title}.json")
-  end
+  Memo.delete_memo(params[:id])
   redirect to('/')
 end
 
 get '/memos/:id/edit' do
-  memos = read_json_file
-  memos.each do |memo|
-    next unless memo['id'] == params[:id]
-
-    @id = memo['id']
-    @article = memo['article']
-    @title = memo['title']
-  end
+  memo = Memo.load_memo(params[:id])
+  @edit_id = params[:id]
+  @title = memo[0]['title']
+  @article = memo[0]['article']
   erb :edit
 end
 
 patch '/memos/:id' do
-  memos = read_json_file
-  memos.each do |memo|
-    next unless memo['id'] == params[:id]
-
-    @id = memo['id']
-    @title = memo['title']
-    updated_memo = { 'title' => escape(params[:title]).to_s, 'article' => escape(params[:article]).to_s, 'id' => memo['id'] }
-    File.open("memos/#{@title}.json", 'w') do |file|
-      JSON.dump(updated_memo, file)
-    end
-  end
+  Memo.updated_memo(params[:title], params[:article], params[:id])
   redirect to('/')
 end
 
