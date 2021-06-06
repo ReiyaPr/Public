@@ -30,7 +30,7 @@ gem 'pg'
 - 一括インストール  
 bundle install --path vendor/bundle 
 
-- PostgreSQLのインストール
+- PostgreSQLのインストール 
 Homebrewを用いて、インストールを行います 
 brew install postgresql 
 サーバを起動させます 
