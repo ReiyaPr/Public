@@ -31,10 +31,10 @@ gem 'pg'
 bundle install --path vendor/bundle 
 
 - PostgreSQLのインストール 
-Homebrewを用いて、インストールを行います 
-brew install postgresql 
-サーバを起動させます 
-pg_ctl -D /usr/local/var/postgres start 
+Homebrewを用いて、インストール  
+brew install postgresql  
+サーバを起動  
+pg_ctl -D /usr/local/var/postgres start  
 
 # 使い方
 cd memo_apps  
