@@ -43,6 +43,12 @@ db = PG.connect(dbname: 'postgres')
 Memo.create_db(db)
 Memo.prepared_statesments(db)
 
+helpers do
+  def escape(text)
+    Rack::Utils.escape_html(text)
+  end
+end
+
 get '/' do
   @memos = Memo.load_all_memos(db).sort_by { |memo| memo['id'] }
   erb :home

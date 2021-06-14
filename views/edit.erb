@@ -1,9 +1,9 @@
  <% @memo.each do |memo| %>
 <form action="/memos/<%= memo['id']%>" method="post">
   <label class="memo_title" for="title">タイトル</label>
-  <input class="title" type="text" name="title" value=<%= memo['title'] %>>
+  <input class="title" type="text" name="title" value=<%= escape(memo['title']) %>>
   <label class="memo_title" for="article">内容</label>
-  <textarea class="article" type="text" name="article"><%= memo['article']%></textarea>
+  <textarea class="article" type="text" name="article"><%= escaoe(memo['article']) %></textarea>
   <input type="hidden" name="_method" value="PATCH">
   <button type="submit">保存</button>
 </form>
