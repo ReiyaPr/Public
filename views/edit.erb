@@ -3,7 +3,7 @@
   <label class="memo_title" for="title">タイトル</label>
   <input class="title" type="text" name="title" value=<%= escape(memo['title']) %>>
   <label class="memo_title" for="article">内容</label>
-  <textarea class="article" type="text" name="article"><%= escaoe(memo['article']) %></textarea>
+  <textarea class="article" type="text" name="article"><%= escape(memo['article']) %></textarea>
   <input type="hidden" name="_method" value="PATCH">
   <button type="submit">保存</button>
 </form>
