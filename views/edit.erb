@@ -1,8 +1,10 @@
-<form action="/memos/<%= @id%>" method="post">
+ <% @memo.each do |memo| %>
+<form action="/memos/<%= memo['id']%>" method="post">
   <label class="memo_title" for="title">タイトル</label>
-  <input class="title" type="text" name="title" value=<%= @title %>>
+  <input class="title" type="text" name="title" value=<%= escape(memo['title']) %>>
   <label class="memo_title" for="article">内容</label>
-  <input class="article" type="text" name="article" value=<%= @article%>>
+  <textarea class="article" type="text" name="article"><%= escape(memo['article']) %></textarea>
   <input type="hidden" name="_method" value="PATCH">
   <button type="submit">保存</button>
 </form>
+<% end %>
